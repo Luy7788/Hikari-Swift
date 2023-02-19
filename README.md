@@ -4,6 +4,7 @@ This repo contains Hikari's Swift Ports. It's ideal for Xcode users to use this 
 We will use the branch ``swift-5.7.2-RELEASE``(will be added later) as an example. We assume this repo is cloned to ``~/Downloads/Hikari-Swift/``   
 Now we can start building: 
 ```
+export SKIP_XCODE_VERSION_CHECK=1
 cd ~/Downloads/Hikari-Swift/
 ./swift/utils/build-toolchain Hikari
 ```
