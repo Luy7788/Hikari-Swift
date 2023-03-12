@@ -1,4 +1,4 @@
 [submodule "llvm-project"]
 	path = llvm-project
-	url = https://github.com/NeHyci/Hikari-LLVM15.git
+	url = https://github.com/61bcdefg/Hikari-LLVM15
 	branch = llvm-swift-5.7.2-RELEASE
