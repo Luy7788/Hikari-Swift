@@ -3,7 +3,7 @@ This repo contains Hikari's Swift Ports. It's ideal for Xcode users to use this 
 # Building
 ```
 export SKIP_XCODE_VERSION_CHECK=1
-git clone --recurse-submodules -b swift-5.7.2-RELEASE https://github.com/NeHyci/Hikari-Swift.git ~/Downloads/Hikari-Swift
+git clone --recurse-submodules -b swift-5.7.2-RELEASE https://github.com/61bcdefg/Hikari-Swift.git ~/Downloads/Hikari-Swift
 cd ~/Downloads/Hikari-Swift/
 ./swift/utils/build-toolchain Hikari
 ```
