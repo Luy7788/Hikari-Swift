@@ -67,4 +67,33 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: swift-5.8-RELEASE
 
+      - name: Checkout swift-5.9.2-RELEASE
+        uses: actions/checkout@v3
+        with:
+          ref: 'swift-5.9.2-RELEASE'
+  
+      - name: Set Git config
+        run: |
+          git config user.name 'Submodule AutoUpdater'
+          git config user.email 'actions@users.noreply.github.com'
+  
+      - name: Update submodule swift-5.9.2-RELEASE
+        id: swift592
+        run: |
+          git submodule update --init
+          git submodule update --remote
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "Some files have been modified"
+            echo "HAS_CHANGES=1" >> $GITHUB_OUTPUT
+            git add .
+            git commit -m "update submodule"
+          fi
+  
+      - name: Push changes swift-5.9.2-RELEASE
+        if: ${{ steps.swift592.outputs.HAS_CHANGES == '1' }}
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: swift-5.9.2-RELEASE
+
  
