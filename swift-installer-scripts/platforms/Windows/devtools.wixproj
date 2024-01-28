@@ -1,0 +1,39 @@
+<Project Sdk="WixToolset.Sdk/4.0.0">
+  <PropertyGroup>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <ProductArchitecture Condition=" '$(ProductArchitecture)' == '' ">amd64</ProductArchitecture>
+    <ProductArchitecture>$(ProductArchitecture)</ProductArchitecture>
+
+    <ProductVersion Condition=" '$(ProductVersion)' == '' ">0.0.0</ProductVersion>
+    <ProductVersion>$(ProductVersion)</ProductVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <OutputPath>build\</OutputPath>
+    <IntermediateOutputPath>build\obj\</IntermediateOutputPath>
+  </PropertyGroup>
+
+  <Import Project="WiXCodeSigning.targets" />
+
+  <PropertyGroup>
+    <DefineConstants>ProductVersion=$(ProductVersion);DEVTOOLS_ROOT=$(DEVTOOLS_ROOT);</DefineConstants>
+    <HarvestDirectoryAutogenerateGuids>false</HarvestDirectoryAutogenerateGuids>
+    <HarvestDirectoryGenerateGuidsNow>true</HarvestDirectoryGenerateGuidsNow>
+    <HarvestDirectoryNoLogo>true</HarvestDirectoryNoLogo>
+    <HarvestDirectorySuppressCom>true</HarvestDirectorySuppressCom>
+    <HarvestDirectorySuppressFragments>true</HarvestDirectorySuppressFragments>
+    <HarvestDirectorySuppressRegistry>true</HarvestDirectorySuppressRegistry>
+    <HarvestDirectorySuppressRootDirectory>true</HarvestDirectorySuppressRootDirectory>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="WixToolset.UI.wixext" Version="4.0.0" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Include="devtools-$(ProductArchitecture).wxs" />
+  </ItemGroup>
+</Project>
