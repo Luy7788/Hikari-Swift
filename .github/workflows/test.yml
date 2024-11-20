@@ -17,17 +17,17 @@ jobs:
         with:
           python-version: "3.12"
       
-      - name: Install setuptools for distutils
-        run: |
-          python3 -m ensurepip
-          python3 -m pip install --upgrade pip setuptools
-          
       - name: Install dependencies
         shell: bash
         run: |
           brew install cmake
           brew install ninja
           
+      - name: Install setuptools for distutils
+        run: |
+          python3 -m ensurepip
+          python3 -m pip install --upgrade pip setuptools
+ 
       - name: Set Environment Variables
         run: echo "SKIP_XCODE_VERSION_CHECK=1" >> $GITHUB_ENV
 
