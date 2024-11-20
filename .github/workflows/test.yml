@@ -4,13 +4,6 @@ on:
   workflow_dispatch:
   push:
     branches: [swift-5.9.2-RELEASE]
-
-
-on:
-  workflow_dispatch:
-  push:
-    branches:
-      - main
  
 jobs:
   build:
