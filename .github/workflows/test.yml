@@ -15,8 +15,13 @@ jobs:
       - name: Setup python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
-
+          python-version: "3.12"
+      
+      - name: Install setuptools for distutils
+        run: |
+          python3 -m ensurepip
+          python3 -m pip install --upgrade pip setuptools
+          
       - name: Install dependencies
         shell: bash
         run: |
