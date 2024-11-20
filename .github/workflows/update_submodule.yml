@@ -1,99 +1,43 @@
-name: Update submodule
+name: build swift5.9.2
 
 on:
-  schedule:
-    - cron: '0 */8 * * *'
   workflow_dispatch:
+  push:
+    branches: [swift-5.9.2-RELEASE]
 
-jobs:
-  updateSubmodule:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout swift-5.7.2-RELEASE
-        uses: actions/checkout@v3
-        with:
-          ref: 'swift-5.7.2-RELEASE'
 
-      - name: Set Git config
-        run: |
-          git config user.name 'Submodule AutoUpdater'
-          git config user.email 'actions@users.noreply.github.com'
-
-      - name: Update submodule swift-5.7.2-RELEASE
-        id: swift572
-        run: |
-          git submodule update --init
-          git submodule update --remote
-          if [ -n "$(git status --porcelain)" ]; then
-            echo "Some files have been modified"
-            echo "HAS_CHANGES=1" >> $GITHUB_OUTPUT
-            git add .
-            git commit -m "update submodule"
-          fi
-
-      - name: Push changes swift-5.7.2-RELEASE
-        if: ${{ steps.swift572.outputs.HAS_CHANGES == '1' }}
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: swift-5.7.2-RELEASE
-      
-      - name: Checkout swift-5.8-RELEASE
-        uses: actions/checkout@v3
-        with:
-          ref: 'swift-5.8-RELEASE'
-
-      - name: Set Git config
-        run: |
-          git config user.name 'Submodule AutoUpdater'
-          git config user.email 'actions@users.noreply.github.com'
-
-      - name: Update submodule swift-5.8-RELEASE
-        id: swift58
-        run: |
-          git submodule update --init
-          git submodule update --remote
-          if [ -n "$(git status --porcelain)" ]; then
-            echo "Some files have been modified"
-            echo "HAS_CHANGES=1" >> $GITHUB_OUTPUT
-            git add .
-            git commit -m "update submodule"
-          fi
-
-      - name: Push changes swift-5.8-RELEASE
-        if: ${{ steps.swift58.outputs.HAS_CHANGES == '1' }}
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: swift-5.8-RELEASE
-
-      - name: Checkout swift-5.9.2-RELEASE
-        uses: actions/checkout@v3
-        with:
-          ref: 'swift-5.9.2-RELEASE'
-  
-      - name: Set Git config
-        run: |
-          git config user.name 'Submodule AutoUpdater'
-          git config user.email 'actions@users.noreply.github.com'
-  
-      - name: Update submodule swift-5.9.2-RELEASE
-        id: swift592
-        run: |
-          git submodule update --init
-          git submodule update --remote
-          if [ -n "$(git status --porcelain)" ]; then
-            echo "Some files have been modified"
-            echo "HAS_CHANGES=1" >> $GITHUB_OUTPUT
-            git add .
-            git commit -m "update submodule"
-          fi
-  
-      - name: Push changes swift-5.9.2-RELEASE
-        if: ${{ steps.swift592.outputs.HAS_CHANGES == '1' }}
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: swift-5.9.2-RELEASE
-
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
  
+jobs:
+  build:
+    runs-on: macos-14
+    env:
+      GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+    steps: 
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        shell: bash
+        run: |
+          brew install cmake
+          brew install ninja
+          
+      - name: Set Environment Variables
+        run: echo "SKIP_XCODE_VERSION_CHECK=1" >> $GITHUB_ENV
+
+      - name: Clone Hikari-Swift Repository
+        run: |
+          git clone --recurse-submodules -b swift-5.9.2-RELEASE https://github.com/61bcdefg/Hikari-Swift.git ~/Downloads/Hikari-Swift
+
+      - name: Build Hikari Swift Toolchain
+        run: |
+          cd ~/Downloads/Hikari-Swift/
+          ./swift/utils/build-toolchain Hikari
