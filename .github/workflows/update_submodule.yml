@@ -43,5 +43,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4.3.3
         with:
-          name: Hikari_Swift5.9.2-2024-11-21-a-osx.tar.gz
-          path: ./Hikari_Swift5.9.2-2024-11-21-a-osx.tar.gz
+          name: Hikari_Swift5.9.2-2024-11-22-a-osx.tar.gz
+          path: /Users/runner/Downloads/Hikari-Swift/Hikari_Swift5.9.2-2024-11-22-a-osx.tar.gz 
