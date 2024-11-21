@@ -39,3 +39,9 @@ jobs:
         run: |
           cd ~/Downloads/Hikari-Swift/
           ./swift/utils/build-toolchain Hikari
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4.3.3
+        with:
+          name: Hikari_LLVM18.1.8_Intel-Mac.tar.gz
+          path: ./Hikari_Swift5.9.2-2024-11-21-a-osx.tar.gz
